@@ -1,6 +1,8 @@
 #include "curspp.h"
 
-void init_curses()
+namespace curspp {
+
+void init()
 {
     setlocale(LC_ALL, "");
 
@@ -22,7 +24,9 @@ void init_curses()
     init_pair(7, COLOR_WHITE, -1);
 }
 
-void end_curses()
+void end()
 {
     endwin();
+}
+
 }
