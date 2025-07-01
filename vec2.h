@@ -20,31 +20,31 @@ public:
 
     static Vec2<T> zero() { return Vec2<T> { 0, 0 }; }
 
-    static Vec2<T> add(Vec2<T> a, Vec2<T> b) { return Vec2<T>{ a.x + b.x, a.y + b.y }; }
-    static Vec2<T> subtract(Vec2<T> a, Vec2<T> b) { return Vec2<T>{ a.x - b.x, a.y - b.y }; }
-    static Vec2<T> multiply(Vec2<T> a, Vec2<T> b) { return Vec2<T>{ a.x * b.x, a.y * b.y }; }
-    static Vec2<T> divide(Vec2<T> a, Vec2<T> b) { return Vec2<T>{ a.x / b.x, a.y / b.y }; }
+    static Vec2<T> add(Vec2<T> a, Vec2<T> b) { return Vec2<T>{ static_cast<T>(a.x + b.x), static_cast<T>(a.y + b.y) }; }
+    static Vec2<T> subtract(Vec2<T> a, Vec2<T> b) { return Vec2<T>{ static_cast<T>(a.x - b.x), static_cast<T>(a.y - b.y) }; }
+    static Vec2<T> multiply(Vec2<T> a, Vec2<T> b) { return Vec2<T>{ static_cast<T>(a.x * b.x), static_cast<T>(a.y * b.y) }; }
+    static Vec2<T> divide(Vec2<T> a, Vec2<T> b) { return Vec2<T>{ static_cast<T>(a.x / b.x), static_cast<T>(a.y / b.y) }; }
 
-    static Vec2<T> cross(Vec2<T> a, Vec2<T> b) { return Vec2<T> { a.x * b.y - a.y * b.x }; }
-    static Vec2<T> scale(Vec2<T> vector, double factor) { return Vec2<T>{ vector.x * factor, vector.y * factor }; }
+    static T cross(Vec2<T> a, Vec2<T> b) { static_cast<T>(a.x * b.y - a.y * b.x); }
+    static Vec2<T> scale(Vec2<T> vector, double factor) { return Vec2<T>{ static_cast<T>(vector.x * factor), static_cast<T>(vector.y * factor) }; }
 
     static double length(Vec2<T> vector) { return std::sqrt(vector.x * vector.x + vector.y * vector.y); }
     static double distance(Vec2<T> a, Vec2<T> b) { return length(subtract(a, b)); }
-    static Vec2<double> normalize(Vec2<T> vector) { return Vec2<double>{ vector.x / length(), vector.y / length() }; }
+    static Vec2<double> normalize(Vec2<T> vector) { return Vec2<double>{ static_cast<T>(vector.x / length()), static_cast<T>(vector.y / length()) }; }
 
     double length() { return std::sqrt(x * x + y * y); }
 
-    Vec2<T> operator+(Vec2<T> const &other) const { return Vec2<T>{ x + other.x, y + other.y }; }
-    Vec2<T> operator-(Vec2<T> const &other) const { return Vec2<T>{ x - other.x, y - other.y }; }
-    Vec2<T> operator*(Vec2<T> const &other) const { return Vec2<T>{ x * other.x, y * other.y }; }
-    Vec2<T> operator/(Vec2<T> const &other) const { return Vec2<T>{ x / other.x, y / other.y }; }
+    Vec2<T> operator+(Vec2<T> const &other) const { return Vec2<T>{ static_cast<T>(x + other.x), static_cast<T>(y + other.y) }; }
+    Vec2<T> operator-(Vec2<T> const &other) const { return Vec2<T>{ static_cast<T>(x - other.x), static_cast<T>(y - other.y) }; }
+    Vec2<T> operator*(Vec2<T> const &other) const { return Vec2<T>{ static_cast<T>(x * other.x), static_cast<T>(y * other.y) }; }
+    Vec2<T> operator/(Vec2<T> const &other) const { return Vec2<T>{ static_cast<T>(x / other.x), static_cast<T>(y / other.y) }; }
 
-    Vec2<T> operator+(double const &factor) const { return Vec2<T>{ x + factor, y + factor }; }
-    Vec2<T> operator-(double const &factor) const { return Vec2<T>{ x - factor, y - factor }; }
-    Vec2<T> operator*(double const &factor) const { return Vec2<T>{ x * factor, y * factor }; }
-    Vec2<T> operator/(double const &factor) const { return Vec2<T>{ x / factor, y / factor }; }
+    Vec2<T> operator+(double const &factor) const { return Vec2<T>{ static_cast<T>(x + factor), static_cast<T>(y + factor) }; }
+    Vec2<T> operator-(double const &factor) const { return Vec2<T>{ static_cast<T>(x - factor), static_cast<T>(y - factor) }; }
+    Vec2<T> operator*(double const &factor) const { return Vec2<T>{ static_cast<T>(x * factor), static_cast<T>(y * factor) }; }
+    Vec2<T> operator/(double const &factor) const { return Vec2<T>{ static_cast<T>(x / factor), static_cast<T>(y / factor) }; }
 
-    Vec2<T> operator-() const { return Vec2<T>{ -x, -y }; }
+    Vec2<T> operator-() const { return Vec2<T>{ static_cast<T>(-x), static_cast<T>(-y) }; }
 
     Vec2<T>& operator+=(Vec2<T> const &other) { x += other.x; y += other.y; return *this; }
     Vec2<T>& operator-=(Vec2<T> const &other) { x -= other.x; y -= other.y; return *this; }
