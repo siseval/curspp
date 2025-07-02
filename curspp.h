@@ -71,6 +71,11 @@ inline char get_input()
     return getch();
 }
 
+inline void flush_input()
+{
+    flushinp();
+}
+
 inline void set_timeout_ms(int16_t ms)
 {
     timeout(ms);
