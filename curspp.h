@@ -30,7 +30,7 @@ constexpr vec2::Vec2<int16_t> RIGHT = vec2::Vec2<int16_t>{ 1, 0 };
 void init();
 void end();
 
-inline void draw_pixel(const vec2::Vec2<int16_t> pos, const std::string pixel)
+inline void add_str(const vec2::Vec2<int16_t> pos, const std::string pixel)
 {
     mvaddstr(pos.y, pos.x, pixel.data());
 }

@@ -35,37 +35,44 @@ public:
     double length() { return std::sqrt(x * x + y * y); }
 
     template <typename U>
-    Vec2<T> operator+(Vec2<U> const &other) const { return Vec2<T>{ static_cast<T>(x + other.x), static_cast<T>(y + other.y) }; }
+    Vec2<T> operator+(const Vec2<U> &other) const { return Vec2<T>{ static_cast<T>(x + other.x), static_cast<T>(y + other.y) }; }
     template <typename U>
-    Vec2<T> operator-(Vec2<U> const &other) const { return Vec2<T>{ static_cast<T>(x - other.x), static_cast<T>(y - other.y) }; }
+    Vec2<T> operator-(const Vec2<U> &other) const { return Vec2<T>{ static_cast<T>(x - other.x), static_cast<T>(y - other.y) }; }
     template <typename U>
-    Vec2<T> operator*(Vec2<U> const &other) const { return Vec2<T>{ static_cast<T>(x * other.x), static_cast<T>(y * other.y) }; }
+    Vec2<T> operator*(const Vec2<U> &other) const { return Vec2<T>{ static_cast<T>(x * other.x), static_cast<T>(y * other.y) }; }
     template <typename U>
-    Vec2<T> operator/(Vec2<U> const &other) const { return Vec2<T>{ static_cast<T>(x / other.x), static_cast<T>(y / other.y) }; }
+    Vec2<T> operator/(const Vec2<U> &other) const { return Vec2<T>{ static_cast<T>(x / other.x), static_cast<T>(y / other.y) }; }
 
-    Vec2<T> operator+(double const &factor) const { return Vec2<T>{ static_cast<T>(x + factor), static_cast<T>(y + factor) }; }
-    Vec2<T> operator-(double const &factor) const { return Vec2<T>{ static_cast<T>(x - factor), static_cast<T>(y - factor) }; }
-    Vec2<T> operator*(double const &factor) const { return Vec2<T>{ static_cast<T>(x * factor), static_cast<T>(y * factor) }; }
-    Vec2<T> operator/(double const &factor) const { return Vec2<T>{ static_cast<T>(x / factor), static_cast<T>(y / factor) }; }
+    Vec2<T> operator+(const double &factor) const { return Vec2<T>{ static_cast<T>(x + factor), static_cast<T>(y + factor) }; }
+    Vec2<T> operator-(const double &factor) const { return Vec2<T>{ static_cast<T>(x - factor), static_cast<T>(y - factor) }; }
+    Vec2<T> operator*(const double &factor) const { return Vec2<T>{ static_cast<T>(x * factor), static_cast<T>(y * factor) }; }
+    Vec2<T> operator/(const double &factor) const { return Vec2<T>{ static_cast<T>(x / factor), static_cast<T>(y / factor) }; }
 
     Vec2<T> operator-() const { return Vec2<T>{ static_cast<T>(-x), static_cast<T>(-y) }; }
 
     template <typename U>
-    Vec2<T>& operator+=(Vec2<U> const &other) { x += other.x; y += other.y; return *this; }
+    Vec2<T>& operator+=(const Vec2<U> &other) { x += other.x; y += other.y; return *this; }
     template <typename U>
-    Vec2<T>& operator-=(Vec2<U> const &other) { x -= other.x; y -= other.y; return *this; }
+    Vec2<T>& operator-=(const Vec2<U> &other) { x -= other.x; y -= other.y; return *this; }
     template <typename U>
-    Vec2<T>& operator*=(Vec2<U> const &other) { x *= other.x; y *= other.y; return *this; }
+    Vec2<T>& operator*=(const Vec2<U> &other) { x *= other.x; y *= other.y; return *this; }
     template <typename U>
-    Vec2<T>& operator/=(Vec2<U> const &other) { x /= other.x; y /= other.y; return *this; }
+    Vec2<T>& operator/=(const Vec2<U> &other) { x /= other.x; y /= other.y; return *this; }
 
-    Vec2<T>& operator+=(double const &factor) { x += factor; y += factor; return *this; }
-    Vec2<T>& operator-=(double const &factor) { x -= factor; y -= factor; return *this; }
-    Vec2<T>& operator*=(double const &factor) { x *= factor; y *= factor; return *this; }
-    Vec2<T>& operator/=(double const &factor) { x /= factor; y /= factor; return *this; }
+    Vec2<T>& operator+=(const double &factor) { x += factor; y += factor; return *this; }
+    Vec2<T>& operator-=(const double &factor) { x -= factor; y -= factor; return *this; }
+    Vec2<T>& operator*=(const double &factor) { x *= factor; y *= factor; return *this; }
+    Vec2<T>& operator/=(const double &factor) { x /= factor; y /= factor; return *this; }
 
-    bool operator==(Vec2<T> const &other) const { return x == other.x && y == other.y; }
-    void operator=(Vec2<T> const &other) { x = other.x; y = other.y; }
+    template <typename U>
+    Vec2<T> operator%(const Vec2<U> &other) const {
+        return Vec2<T>{ static_cast<T>(static_cast<int64_t>(x) % static_cast<int64_t>(other.x)),
+                        static_cast<T>(static_cast<int64_t>(y) % static_cast<int64_t>(other.y)) };
+    }
+
+    bool operator==(const Vec2<T> &other) const { return x == other.x && y == other.y; }
+    bool operator!=(const Vec2<T> &other) const { return x != other.x || y != other.y; }
+    void operator=(const Vec2<T> &other) { x = other.x; y = other.y; }
 
     template <typename U>
     operator Vec2<U>() const { return { static_cast<U>(x), static_cast<U>(y) }; }
@@ -85,5 +92,15 @@ using vec2d = Vec2<double>;
 using vec2f = Vec2<float>;
 
 }
+
+template <typename T>
+struct std::hash<vec2::Vec2<T>>
+{
+    size_t operator()(const vec2::Vec2<T>& vec) const
+    {
+        return std::hash<T>()(vec.x) ^ (std::hash<T>()(vec.y) << 1);
+    }
+};
+
 
 #endif // VEC2_H
